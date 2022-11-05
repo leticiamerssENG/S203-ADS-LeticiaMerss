@@ -10,8 +10,9 @@ class CalculadoraFreteTest {
 	void deveCalcularFreteParaDHL() {
 		
 		CalculadoraFrete calculadora = new CalculadoraFrete();
-		double valorObtido = calculadora.calcularValor("dhl",10.0);
-        double valorEsperado = 100.0;
+		Fretavel servicoFreteDHL = new ServicoFreteDHL();
+		double valorObtido = calculadora.calcular(servicoFreteDHL,10.0);
+        	double valorEsperado = 100.0;
 		
 		assertEquals(valorObtido, valorEsperado);		
 	}
@@ -20,8 +21,9 @@ class CalculadoraFreteTest {
     void deveCalcularFreteParaSedex() {
 		
 		CalculadoraFrete calculadora = new CalculadoraFrete();
-		double valorObtido = calculadora.calcularValor("sedex",15.0);
-        double valorEsperado = 70.0;
+		Fretavel servicoFreteSedex = new ServicoFreteSedex();
+		double valorObtido = calculadora.calcular(servicoFreteSedex,15.0);
+        	double valorEsperado = 70.0;
 		
 		assertEquals(valorObtido, valorEsperado);			
 	}
@@ -30,22 +32,35 @@ class CalculadoraFreteTest {
     void deveCalcularFreteParaJadLog() {
 		
 		CalculadoraFrete calculadora = new CalculadoraFrete();
-		double valorObtido = calculadora.calcularValor("jadlog",40.0);
-        double valorEsperado = 150.0;
+		Fretavel servicoFreteJadLog = new ServicoFreteJadLog();
+		double valorObtido = calculadora.calcular(servicoFreteJadLog,40.0);
+        	double valorEsperado = 150.0;
+		
+		assertEquals(valorObtido, valorEsperado);			
+	}
+    
+    @Test
+    void deveCalcularFreteParaFedEx() {
+		
+		CalculadoraFrete calculadora = new CalculadoraFrete();
+		Fretavel servicoFreteFedEx = new ServicoFreteFedEx();
+		double valorObtido = calculadora.calcular(servicoFreteFedEx,40.0);
+        	double valorEsperado = 150.0;
 		
 		assertEquals(valorObtido, valorEsperado);			
 	}
 
+    /*
     @Test
     void deveLancarExceptionParaServicoDesconhecido(){
         try{
 			CalculadoraFrete calculadora = new CalculadoraFrete();
-		    double valorObtido = calculadora.calcularValor("desconhecido",40.0);
+		    double valorObtido = calculadora.calcular("desconhecido",40.0);
             
 			fail("Devia ter lançado exception");
 			
 		}catch (IllegalStateException e){
 			e.printStackTrace();
 		}
-    }
+    }*/
 }
