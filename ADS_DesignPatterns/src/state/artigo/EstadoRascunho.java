@@ -1,8 +1,10 @@
 package state.artigo;
 
+import java.time.LocalDate;
+
 public class EstadoRascunho implements Estado {
 	
-	private Artigo artigo;
+	public Artigo artigo;
 
 	public EstadoRascunho(Artigo artigo) {
 		this.artigo = artigo;
@@ -12,7 +14,13 @@ public class EstadoRascunho implements Estado {
 	public void publicar() {
 		GerenteDeSeguranca seguranca = GerenteDeSeguranca.getInstance();
 		
-		if(seguranca.ehUsuarioAutor())
+		if(seguranca.ehUsuarioAutor()) {
+			this.artigo.transitarEstadoPara(new EstadoRevisando(artigo));
+			this.artigo.getLogHistorico().add("Transitando para REVISANDO em +  " + LocalDate.now());
+			return;
+		}else {
+			throw new RuntimeException("Usuario não tem permissão para publicar");
+		}
 		
 	}
 
@@ -20,5 +28,7 @@ public class EstadoRascunho implements Estado {
 	public void reprovar() {	
 		
 	}
+	
+	// ctrl 1 atalho
 
 }
