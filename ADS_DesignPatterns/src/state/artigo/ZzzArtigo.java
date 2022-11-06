@@ -1,7 +1,6 @@
 package state.artigo;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,12 +57,16 @@ public class ZzzArtigo {
 		GerenteDeSeguranca seguranca = GerenteDeSeguranca.getInstance();
 		
 		if("RASCUNHO".equals(this.estado)) {
+			return;
+		}
+		
+		if("REVISANDO".equals(this.estado)) {
 			if(seguranca.ehUsuarioModerador()) {
 				this.estado = "RASCUNHO";
-				this.logHistorico.add("Transitando para Rascunho em " + LocalDateTime.now());
+				this.logHistorico.add("Tansitado para RASCUNHO em + " + LocalDate.now());
 				return;
 			} else {
-				throw new RuntimeException("Usuário não tem permissão para reprovar");
+				throw new RuntimeException("Usuario não tem permissão para reprovar");
 			}
 		}
 		
